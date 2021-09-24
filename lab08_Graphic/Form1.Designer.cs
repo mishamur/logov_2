@@ -43,6 +43,7 @@ namespace lab08_Graphic
             this.labelY2 = new System.Windows.Forms.Label();
             this.labelX2 = new System.Windows.Forms.Label();
             this.labelR2 = new System.Windows.Forms.Label();
+            this.labelAnswer = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -167,11 +168,22 @@ namespace lab08_Graphic
             this.labelR2.TabIndex = 11;
             this.labelR2.Text = "R2";
             // 
+            // labelAnswer
+            // 
+            this.labelAnswer.AutoSize = true;
+            this.labelAnswer.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelAnswer.Location = new System.Drawing.Point(183, 27);
+            this.labelAnswer.Name = "labelAnswer";
+            this.labelAnswer.Size = new System.Drawing.Size(48, 20);
+            this.labelAnswer.TabIndex = 14;
+            this.labelAnswer.Text = "Ответ";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelAnswer);
             this.Controls.Add(this.labelY2);
             this.Controls.Add(this.labelX2);
             this.Controls.Add(this.labelR2);
@@ -210,6 +222,7 @@ namespace lab08_Graphic
         private System.Windows.Forms.Label labelY2;
         private System.Windows.Forms.Label labelX2;
         private System.Windows.Forms.Label labelR2;
+        private System.Windows.Forms.Label labelAnswer;
     }
 }
 

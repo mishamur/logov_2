@@ -12,14 +12,28 @@ using System.Windows.Forms;
 namespace lab08_Graphic
 {
     public partial class Form1 : Form
-    {
+    { 
 
         public struct ResultPoint
         {
-            public double x3 { get; set; }
-            public double y3 { get; set; }
-            public double x4 { get; set; }
-            public double y4 { get; set; }
+            public override string ToString()
+            {
+                if(x4 != null & y4 != null & y3 != null & x3 != null)
+                {
+                    return $"({Math.Round((double) x3, 2)}, {Math.Round((double)y3, 2)})" +
+                        $" ({Math.Round((double)x4, 2)}, + {Math.Round((double)y4, 2)})";
+                }
+                else if (y3 != null & x3 != null)
+                {
+                    return $"({Math.Round((double)x3, 2)}, {Math.Round((double)y3, 2)})";
+                }
+                return "";
+            }
+
+            public double? x3 { get; set; }
+            public double? y3 { get; set; }
+            public double? x4 { get; set; }
+            public double? y4 { get; set; }
         }
 
         //рисуем окружность
@@ -39,12 +53,14 @@ namespace lab08_Graphic
             graphics.DrawLines(pen, vector.ToArray());
         }
 
-        public static void CalcIntersection(int x1, int y1, int r1, int x2,int y2, int r2, ref ResultPoint resultPoint)
+        public static ResultPoint CalcIntersection(int x1, int y1, int r1, int x2,int y2, int r2)
         {
+            ResultPoint resultPoint = new ResultPoint();
             double d = Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
             double t = 0.00001;
             if((d > r1 + r2) | (d < Math.Abs(r1 - r2)))
             {
+                
                 //точек пересечения нет
             }
             else if (Math.Abs(d - (r1 + r2)) < t)
@@ -52,6 +68,9 @@ namespace lab08_Graphic
                 //окружности касаются в точке
                 double x3 = (x1 + x2) / 2;
                 double y3 = (y1 + y2) / 2;
+                
+                resultPoint.x3 = x3;
+                resultPoint.y3 = y3;
             }
             else
             {
@@ -66,6 +85,7 @@ namespace lab08_Graphic
                 double x4 = x + (y - y2) * h / b;
                 double y4 = y - (x - x2) * h / b;
 
+                
                 resultPoint.x3 = x3;
                 resultPoint.x4 = x4;
                 resultPoint.y3 = y3;
@@ -73,6 +93,9 @@ namespace lab08_Graphic
                 
 
             }
+            return resultPoint;
+
+
         }
 
 
@@ -136,11 +159,31 @@ namespace lab08_Graphic
 
 
             ResultPoint resultPoint = new ResultPoint();
-            CalcIntersection(x1 / 10, y1 / 10, r1 / 10,  x2 / 10, y2 / 10, r2 / 10, ref resultPoint);
+            
+            
+            resultPoint = CalcIntersection(x1 / 10, y1 / 10, r1 / 10, x2 / 10, y2 / 10, r2 / 10);
+            Pen pointsPen = new Pen(Color.LightBlue, 0.2f);
+                
+            if (resultPoint.x3 != null & resultPoint.y3 != null & resultPoint.x4 != null & resultPoint.y4 != null)
+            {
+                graphics.DrawEllipse(pointsPen, new RectangleF((float)(resultPoint.x3 * 10 - 1f), (float)(resultPoint.y3 * 10 - 1f), 2f, 2f));
+                graphics.DrawEllipse(pointsPen, new RectangleF((float)(resultPoint.x4 * 10 - 1f), (float)(resultPoint.y4 * 10 - 1f), 2f, 2f));
+                labelAnswer.Text = "точки пересечения -  " + resultPoint.ToString();
+            }
+            else if(resultPoint.x3 != null & resultPoint.y3 != null)
+            {
+                graphics.DrawEllipse(pointsPen, new RectangleF((float)(resultPoint.x3 * 10 - 1f), (float)(resultPoint.y3 * 10 - 1f), 2f, 2f));
+                labelAnswer.Text = "точка пересечения - " + resultPoint.ToString();
+            }
+            else
+            {
+                labelAnswer.Text = "Нет точек пересечения";
+                //нет точек пересечения
+            }
 
 
-            graphics.DrawLine(pen, new PointF((float)resultPoint.x3 * 10, (float)resultPoint.y3 * 10),
-                                   new PointF((float)resultPoint.x4 * 10, (float)resultPoint.y4 * 10));
+            //graphics.DrawLine(pen, new PointF((float)resultPoint.x3 * 10, (float)resultPoint.y3 * 10),
+            //                       new PointF((float)resultPoint.x4 * 10, (float)resultPoint.y4 * 10));
 
 
             
