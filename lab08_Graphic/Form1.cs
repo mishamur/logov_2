@@ -126,7 +126,7 @@ namespace lab08_Graphic
             graphics.Clear(BackColor);
             graphics.PageUnit = GraphicsUnit.Millimeter;
             //x 724 //y 259
-            int margin = 30;
+            
             width = pictureBox1.Width;
             height = pictureBox1.Height;
             Pen pen = new Pen(Color.Black, 0.5f);
